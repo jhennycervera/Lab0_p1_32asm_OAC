@@ -30,15 +30,15 @@ asmMedia32womin:
     mov ebx,ecx
     dec ecx 
     jz exit
-    push edi
+    push edi   ; guarda la dm del arr[0]
 
 suma:
-    add edi,4
-    add eax,[edi]
+    add edi,4 ;sgte entero del arreglo
+    add eax,[edi]  ; suma el entero
     loop suma
 
-    pop edi
-    push eax
+    pop edi  ;recupero el arreglo
+    push eax  ; guardo la suma
 
     mov ecx,ebx     ; recuperamos ecx <- N
     dec ecx         ; ecx <- N-1
@@ -46,23 +46,23 @@ suma:
 
 min:
     add edi,4
-    mov eax,[edi]
-    cmp edx,eax
-    jg updatemin
+    mov eax,[edi]   ;
+    cmp edx,eax  ; 1er elem del arr lo compara con el 2do  
+    jg updatemin  ; si el minelemento es mayor que eax , actualizo el min
     loop min
     jmp exit
 
 updatemin:
     xchg edx,eax    ; edx <- eax y eax <- edx
-    cmp ecx,1
-    jg min
+    cmp ecx,1       ; si no coloco esto va intentar leer un valor fuera del rango, si es 1 ya fue el ultimo
+    jg min   
 
 exit:
-    pop eax
+    pop eax         ;recupero la suma del arreglo
     sub eax,edx     ; eax <- eax - min(arreglo)
     cdq             ; extender el signo de eax hacia edx
-    dec ebx
-    idiv ebx        ; cociente: eax <- (edx:eax)/ebx ---- residuo: edx
+    dec ebx         ; desacarto un elemento: N-1
+    idiv ebx        ; cociente: eax <- (edx:eax)/ebx ---- residuo: edx    calculo la media o promedio
 
 ; -------------------------------------------- ;
 ; -------------------------------------------- ;
